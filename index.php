@@ -23,6 +23,8 @@
 		$tmp_image = $_FILES['image']['tmp_name'];
 		$imageSize = $_FILES['image']['size'];
 
+		$conditions = isset($_POST['conditions']);
+
 		$date = date("F, d Y");
 
 		if(strlen($firstName) < 3)
@@ -36,6 +38,10 @@
 		else if(!filter_var($email,FILTER_VALIDATE_EMAIL))
 		{
 			$error="Please enter valid email address";
+		}
+		else if(email_exists($email,$con))
+		{
+			$error="Already registered email";
 		}
 		else if(strlen($password) < 8)
 		{
@@ -52,6 +58,10 @@
 		else if($imageSize > 1048576)
 		{
 			$error="Image size must be less than 1 MB";
+		}
+		else if(!$conditions)
+		{
+			$error="Do agree to the terms and conditions";
 		}
 		else
 		{
@@ -93,7 +103,7 @@
 			<link rel="stylesheet" href="css/styles.css" />
 		</head>
 		<body>
-			<div id="error">
+			<div id="error" style=" <?php if($error != "") { ?> display:block; <?php } ?>">
 				<?php echo $error; ?>
 			</div>
 			<div id="wrapper">
@@ -104,18 +114,20 @@
 				<div id="formDiv">
 					<form method="POST" action="index.php" enctype="multipart/form-data">
 						<label>First Name:</label><br/>
-						<input type="text" name="fname" /><br/><br/>
+						<input type="text" name="fname" class="inputFields" required/><br/><br/>
 						<label>Last Name:</label><br/>
-						<input type="text" name="lname" /><br/><br/>
+						<input type="text" name="lname" class="inputFields" required/><br/><br/>
 						<label>Email:</label><br/>
-						<input type="text" name="email" /><br/><br/>
+						<input type="text" name="email" class="inputFields" required/><br/><br/>
 						<label>Password:</label><br/>
-						<input type="password" name="password" /><br/><br/>
+						<input type="password" name="password" class="inputFields" required/><br/><br/>
 						<label>Re-enter Password:</label><br/>
-						<input type="password" name="passwordConfirm" /><br/><br/>
+						<input type="password" name="passwordConfirm" class="inputFields" required/><br/><br/>
 						<label>Image:</label><br/>
 						<input type="file" name="image" /><br/><br/>
-						<input type="submit" name="submit" />
+						<input type="checkbox" name="conditions" />
+						<label>I agree to the terms and conditions</label><br/><br/>
+						<input type="submit" class="theButtons" name="submit" />
 					</form>
 				</div>
 			</div>

@@ -15,6 +15,7 @@
 	{
 		$email = $_POST['email'];
 		$password = $_POST['password'];
+		$checkbox = isset($_POST['keep']);
 		
 		if(email_exists($email,$con))
 		{
@@ -27,6 +28,10 @@
 			else
 			{
 				$_SESSION['email']=$email;
+				if($checkbox == "on")
+				{
+					setcookie("email",$email,time()+3600);
+				}
 				header("location: profile.php");
 			}
 		}
@@ -55,12 +60,12 @@
 				<div id="formDiv">
 					<form method="POST" action="login.php">
 						<label>Email:</label><br/>
-						<input type="text" name="email" /><br/><br/>
+						<input type="text" name="email" class="inputFields" required/><br/><br/>
 						<label>Password:</label><br/>
-						<input type="password" name="password" /><br/><br/>
+						<input type="password" name="password" class="inputFields" required/><br/><br/>
 						<input type="checkbox" name="keep" />
 						<label>Keep me logged in</label><br/><br/>
-						<input type="submit" name="submit" value="login"/>
+						<input type="submit" name="submit" class="theButtons" value="login"/>
 					</form>
 				</div>
 			</div>

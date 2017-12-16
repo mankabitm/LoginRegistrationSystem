@@ -5,8 +5,8 @@
 
 	if(logged_in())
 	{
-		echo "Logged in";
 	?>
+		<a href="changepassword.php">Change password</a>
 		<a href="logout.php" style="float:right; padding:10px; margin-right:40px; background-color:#eee; color:#333; text-decoration:none;">Logout</a>
 	<?php
 	}

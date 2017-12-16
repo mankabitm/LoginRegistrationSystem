@@ -49,7 +49,7 @@
 			<link rel="stylesheet" href="css/styles.css" />
 		</head>
 		<body>
-			<div id="error">
+			<div id="error" style=" <?php if($error != "") { ?> display:block; <?php } ?>">
 				<?php echo $error; ?>
 			</div>
 			<div id="wrapper">
